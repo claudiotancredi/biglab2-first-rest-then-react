@@ -1,0 +1,76 @@
+/* Global */
+.vheight-100 {
+  min-height: 100vh;
+}
+
+.below-nav {
+  padding-top: 5rem;
+}
+
+/* Filters and projects */
+.list-group-item {
+  background-color: transparent !important;
+}
+
+.list-group-item.active {
+  background-color: #28a745 !important;
+  border-color    : #28a745 !important;
+}
+
+.list-group-item-action:hover {
+  background-color: #9becae !important;
+}
+
+.projects-title {
+  margin-top: 2rem;
+}
+
+/* Class for important tasks */
+.important {
+  color: red;
+}
+
+/* Add task button */
+.fixed-right-bottom {
+  position     : fixed;
+  right        : 0;
+  bottom       : 0;
+  z-index      : 1030;
+  margin       : 0 1.5rem 1.5rem 0;
+  border-radius: 50% !important;
+}
+
+/*Filter text not bold*/
+.filterText {
+  font-weight: normal;
+}
+
+/*hx (h1, h2, ecc.) no new line*/
+.noNewLine {
+  display: inline;
+}
+
+/*Remove borders from aside items and style them as "flush".
+ It can't be done with variant="flush" on ListGroup since its children
+ are not ListGroup.Item, they are Link*/
+.flushStyle {
+  border-left : none !important;
+  border-right: none !important;
+  border-top  : none !important;
+}
+
+/*Style the logout button*/
+.logout {
+  color          : #FFFFFF !important;
+  text-decoration: none !important;
+}
+
+/*Center the login form*/
+.center {
+  margin       : 0;
+  position     : absolute;
+  top          : 50%;
+  left         : 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform    : translate(-50%, -50%);
+}

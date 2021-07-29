@@ -1,0 +1,255 @@
+@server = http://localhost:3001
+
+### USERS
+
+### Correct login
+POST {{server}}/api/sessions
+Content-Type: application/json
+
+{"username": "claudiotancredi@polito.it", 
+"password": "eusebio"}
+
+### Wrong username/password for login
+POST {{server}}/api/sessions
+Content-Type: application/json
+
+{"username": "claudiotancredi@polito.it", 
+"password": "akkjfingf"}
+
+### Logout
+DELETE {{server}}/api/sessions/current
+
+### Check if the user is logged or not
+GET {{server}}/api/sessions/current
+
+
+
+
+
+
+
+
+### GET all tasks from db.
+GET {{server}}/api/tasks 
+
+
+
+
+
+### FILTERS 
+
+### GET all important tasks from db.
+GET {{server}}/api/tasks/filter=important 
+
+### GET all private tasks from db.
+GET {{server}}/api/tasks/filter=private 
+
+### GET all tasks from db whose deadline is today.
+GET {{server}}/api/tasks/filter=today 
+
+### GET all tasks from db whose deadline is in the next 7 days.
+GET {{server}}/api/tasks/filter=next7days 
+
+
+
+
+
+
+### GET the task from db with the specified id.
+GET {{server}}/api/tasks/1 
+
+### GET the task from db with the specified id. Invalid param.
+GET {{server}}/api/tasks/1a 
+
+### GET the task from db with the specified id. Id of a task that is not in db.
+GET {{server}}/api/tasks/1223 
+
+
+
+
+
+### Send a new task that will be stored in the back-end. NB: deadline is a string, not a dayjs
+### object as in my front-end. The deadline need to have the format "YYYY-MM-DD[T]HH:mm". This is a valid body.
+POST {{server}}/api/tasks 
+Content-Type: application/json
+
+{
+	"description": "Check if the pen is on the table",
+	"important": false,
+	"priv": false,
+	"deadline": "2021-06-21T02:27",
+	"completed": false
+}
+
+### Send a new task that will be stored in the back-end. Another valid body.
+POST {{server}}/api/tasks 
+Content-Type: application/json
+
+{
+	"description": "Go to PoliTo",
+	"important": true,
+	"priv": true,
+	"deadline": null,
+	"completed": false
+}
+
+### Send a new task that will be stored in the back-end. Invalid body due to short description.
+POST {{server}}/api/tasks 
+Content-Type: application/json
+
+{
+	"description": "Go",
+	"important": true,
+	"priv": true,
+	"deadline": "2021-06-21T02:27",
+	"completed": false
+}
+
+### Send a new task that will be stored in the back-end. Invalid body due to description that is not a string.
+POST {{server}}/api/tasks 
+Content-Type: application/json
+
+{
+	"description": 1,
+	"important": true,
+	"priv": true,
+	"deadline": "2021-06-21T02:27",
+	"completed": false
+}
+
+### Send a new task that will be stored in the back-end. Invalid body due to important flag that is not boolean.
+POST {{server}}/api/tasks 
+Content-Type: application/json
+
+{
+	"description": "Go to school",
+	"important": 2,
+	"priv": true,
+	"deadline": "2021-06-21T02:27",
+	"completed": false
+}
+
+### Send a new task that will be stored in the back-end. Invalid body due to priv flag that is not boolean.
+POST {{server}}/api/tasks 
+Content-Type: application/json
+
+{
+	"description": "Go to school",
+	"important": true,
+	"priv": 2,
+	"deadline": "2021-06-21T02:27",
+	"completed": false
+}
+
+### Send a new task that will be stored in the back-end. Invalid body due to a deadline that is not a string.
+POST {{server}}/api/tasks 
+Content-Type: application/json
+
+{
+	"description": "Go to school",
+	"important": true,
+	"priv": false,
+	"deadline": 123,
+	"completed": false
+}
+
+### Send a new task that will be stored in the back-end. Invalid body due to a deadline that is a string with an invalid format.
+POST {{server}}/api/tasks 
+Content-Type: application/json
+
+{
+	"description": "Go to school",
+	"important": true,
+	"priv": false,
+	"deadline": "2021-12-25",
+	"completed": false
+}
+
+### Send a new task that will be stored in the back-end. Invalid body due to completed flag that is not boolean.
+POST {{server}}/api/tasks 
+Content-Type: application/json
+
+{
+	"description": "Go to school",
+	"important": true,
+	"priv": true,
+	"deadline": "2021-06-21T02:27",
+	"completed": 2
+}
+
+### Send a new task that will be stored in the back-end. Invalid body because two fields (completed) are missing.
+POST {{server}}/api/tasks 
+Content-Type: application/json
+
+{
+	"description": "Go to school",
+	"important": true,
+	"priv": true,
+	"deadline": "2021-06-21T02:27"
+}
+
+### Send a new task that will be stored in the back-end. Invalid body due to various errors.
+POST {{server}}/api/tasks 
+Content-Type: application/json
+
+{
+	"description": "Hi",
+	"important": true,
+	"priv": true,
+	"deadline": "1",
+	"completed": 3
+}
+
+
+
+
+
+### UPDATE a task. Valid body and param.
+PUT {{server}}/api/tasks/4 
+Content-Type: application/json
+
+{
+	"description": "Study WA1!!",
+	"important": true,
+	"priv": true,
+	"deadline": "2021-06-29T02:27",
+	"completed": 0
+}
+
+### UPDATE a task, failed due to errors in params and body.
+PUT {{server}}/api/tasks/a 
+Content-Type: application/json
+
+{
+	"description": "Study WA1!!",
+	"important": true,
+	"priv": 6,
+	"deadline": 77,
+	"completed": 0
+}
+
+### UPDATE a task. Task with given id not in db.
+PUT {{server}}/api/tasks/400 
+Content-Type: application/json
+
+{
+	"description": "Study WA1!!",
+	"important": true,
+	"priv": true,
+	"deadline": "2021-06-29T02:27",
+	"completed": 0
+}
+
+
+
+
+
+
+### DELETE a task with the given id.
+DELETE {{server}}/api/tasks/2 
+
+### DELETE a task with the given id. Invalid param.
+DELETE {{server}}/api/tasks/2a 
+
+### DELETE a task with the given id. Id of a task that is not in the db.
+DELETE {{server}}/api/tasks/2233 
